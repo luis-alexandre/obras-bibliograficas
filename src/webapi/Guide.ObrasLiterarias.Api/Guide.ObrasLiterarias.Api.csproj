@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\temp\guide\obras-bibliograficas\src\webapi\Guide.ObrasLiterarias.Api\Guide.ObrasLiterarias.Api.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Guide.ObrasLiterarias.Domain\Guide.ObrasLiterarias.Domain.csproj" />
+    <ProjectReference Include="..\Guide.ObrasLiterarias.Infra\Guide.ObrasLiterarias.Infra.csproj" />
+    <ProjectReference Include="..\Guide.ObrasLiterarias.Services\Guide.ObrasLiterarias.Services.csproj" />
+  </ItemGroup>
+
+</Project>

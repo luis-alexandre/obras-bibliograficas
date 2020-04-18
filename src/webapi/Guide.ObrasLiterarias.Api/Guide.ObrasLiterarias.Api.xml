@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Guide.ObrasLiterarias.Api</name>
+    </assembly>
+    <members>
+        <member name="P:Guide.ObrasLiterarias.Api.Contracts.GerarCitacaoRequest.Autores">
+            <summary>
+            Lista de Autores
+            </summary>
+        </member>
+        <member name="M:Guide.ObrasLiterarias.Api.Controllers.ObrasLiterariasController.ListarCitacoes">
+            <summary>
+            Obtém a lista de citações geradas.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Guide.ObrasLiterarias.Api.Controllers.ObrasLiterariasController.GerarCitacaoAsync(Guide.ObrasLiterarias.Api.Contracts.GerarCitacaoRequest)">
+            <summary>
+            Gera citacoes a partir de uma lista de autores.
+            </summary>
+            <param name="gerarCitacaoRequest">Lista de autores</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
