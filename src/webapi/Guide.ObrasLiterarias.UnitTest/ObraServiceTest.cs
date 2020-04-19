@@ -1,4 +1,7 @@
+using Guide.ObrasLiterarias.Domain.Entities;
+using Guide.ObrasLiterarias.Domain.Repository;
 using Guide.ObrasLiterarias.Services;
+using Moq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,9 +24,14 @@ namespace Guide.ObrasLiterarias.UnitTest
 
         private readonly ObraService _obraService;
 
+        private readonly Mock<ICitacaoAutorRepository> _mockCitacaoAutorRepository;
+
         public ObraServiceTest()
         {
-            this._obraService = new ObraService();
+            _mockCitacaoAutorRepository = new Mock<ICitacaoAutorRepository>();
+            _mockCitacaoAutorRepository.Setup(x => x.InserirAsync(It.IsAny<CitacaoAutor>())).ReturnsAsync(1);
+
+            this._obraService = new ObraService(_mockCitacaoAutorRepository.Object);
         }
 
         [Fact]

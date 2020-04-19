@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Guide.ObrasLiterarias.Domain.Repository;
 using Guide.ObrasLiterarias.Domain.Services;
+using Guide.ObrasLiterarias.Infra.Infra.SqlLite;
 using Guide.ObrasLiterarias.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,7 @@ namespace Guide.ObrasLiterarias.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSingleton<IObraService, ObraService>();
+            services.AddSingleton<ICitacaoAutorRepository, CitacaoAutorRepository>();
 
             services.AddSwaggerGen(c =>
             {

@@ -1,4 +1,6 @@
-﻿using Guide.ObrasLiterarias.Domain.Services;
+﻿using Guide.ObrasLiterarias.Domain.Entities;
+using Guide.ObrasLiterarias.Domain.Repository;
+using Guide.ObrasLiterarias.Domain.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,8 +13,12 @@ namespace Guide.ObrasLiterarias.Services
         private List<string> _silabasExcecoes;
         private List<string> _sobrenomeComposto;
 
-        public ObraService()
+        private readonly ICitacaoAutorRepository _citacaoAutorRepository;
+
+        public ObraService(ICitacaoAutorRepository citacaoAutorRepository)
         {
+            this._citacaoAutorRepository = citacaoAutorRepository;
+
             CarregarExcecoes();
             CarregarSobrenomeCompostos();
         }
@@ -30,6 +36,15 @@ namespace Guide.ObrasLiterarias.Services
             {
                 var citacao = ObterCitacao(item);
                 result.Add(item, citacao);
+
+                CitacaoAutor citacaoAutor = new CitacaoAutor
+                {
+                    Id = new Guid().ToString(),
+                    Autor = item,
+                    Citacao = citacao
+                };
+
+                await this._citacaoAutorRepository.InserirAsync(citacaoAutor);
             }
 
             return result;
