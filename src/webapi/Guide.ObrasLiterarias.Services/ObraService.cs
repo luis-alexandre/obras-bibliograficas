@@ -8,12 +8,13 @@ namespace Guide.ObrasLiterarias.Services
 {
     public class ObraService : IObraService
     {
-        private List<string> _excecoes;
+        private List<string> _silabasExcecoes;
+        private List<string> _sobrenomeComposto;
 
         public ObraService()
         {
-            this._excecoes = new List<string>();
             CarregarExcecoes();
+            CarregarSobrenomeCompostos();
         }
 
         public async Task<Dictionary<string, string>> GerarCitacaoAsync(int numeroAutores, List<string> autores)
@@ -38,16 +39,28 @@ namespace Guide.ObrasLiterarias.Services
         {
             StringBuilder citacao = new StringBuilder();
 
-            var nomes = autorNome.Split(' ');
-            citacao.Append(nomes[nomes.Length - 1].ToUpper());
+            var nomes = autorNome.ToLower().Split(' ');
+            int index = 0;
+
+            if (this._sobrenomeComposto.Contains(nomes[nomes.Length - 1]))
+            {
+                citacao.Append($"{nomes[nomes.Length - 2].ToUpper()} {nomes[nomes.Length - 1].ToUpper()}");
+                index = nomes.Length - 2;
+            }
+            else
+            {
+                citacao.Append(nomes[nomes.Length - 1].ToUpper());
+                index = nomes.Length - 1;
+            }
+            
 
             if (nomes.Length > 1)
             {
                 citacao.Append(",");
 
-                for (int i = 0; i < nomes.Length - 1; i++)
+                for (int i = 0; i < index; i++)
                 {
-                    if (!this._excecoes.Contains(nomes[i]))
+                    if (!this._silabasExcecoes.Contains(nomes[i]))
                     {
                         nomes[i] = char.ToUpper(nomes[i][0]) + nomes[i].Substring(1).ToLower();
                         citacao.Append($" {nomes[i]}");
@@ -64,13 +77,27 @@ namespace Guide.ObrasLiterarias.Services
 
         private void CarregarExcecoes()
         {
-            this._excecoes = new List<string>()
+            this._silabasExcecoes = new List<string>()
             {
                 "da",
                 "de",
                 "do",
                 "das",
                 "dos"
+            };
+        }
+
+        private void CarregarSobrenomeCompostos()
+        {
+            this._sobrenomeComposto = new List<string>()
+            {
+                "filho",
+                "filha",
+                "neto",
+                "neta",
+                "sobrinho",
+                "sobrinha",
+                "junior"
             };
         }
     }
