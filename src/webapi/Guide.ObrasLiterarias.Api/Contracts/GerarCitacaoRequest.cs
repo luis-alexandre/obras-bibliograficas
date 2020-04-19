@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Guide.ObrasLiterarias.Api.Contracts
 {
     public class GerarCitacaoRequest
     {
         /// <summary>
-        /// Lista de Autores
+        /// Número de autores.
+        /// </summary>
+        public int NumeroAutores { get; set; }
+
+        /// <summary>
+        /// Nome completo dos Autores
         /// </summary>
         public List<string> Autores { get; set; }
     }

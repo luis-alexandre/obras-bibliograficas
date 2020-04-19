@@ -4,16 +4,15 @@
         <name>Guide.ObrasLiterarias.Api</name>
     </assembly>
     <members>
-        <member name="P:Guide.ObrasLiterarias.Api.Contracts.GerarCitacaoRequest.Autores">
+        <member name="P:Guide.ObrasLiterarias.Api.Contracts.GerarCitacaoRequest.NumeroAutores">
             <summary>
-            Lista de Autores
+            Número de autores.
             </summary>
         </member>
-        <member name="M:Guide.ObrasLiterarias.Api.Controllers.ObrasLiterariasController.ListarCitacoes">
+        <member name="P:Guide.ObrasLiterarias.Api.Contracts.GerarCitacaoRequest.Autores">
             <summary>
-            Obtém a lista de citações geradas.
+            Nome completo dos Autores
             </summary>
-            <returns></returns>
         </member>
         <member name="M:Guide.ObrasLiterarias.Api.Controllers.ObrasLiterariasController.GerarCitacaoAsync(Guide.ObrasLiterarias.Api.Contracts.GerarCitacaoRequest)">
             <summary>

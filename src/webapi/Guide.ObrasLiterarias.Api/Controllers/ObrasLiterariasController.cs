@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Guide.ObrasLiterarias.Api.Contracts;
 using Guide.ObrasLiterarias.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -16,17 +17,6 @@ namespace Guide.ObrasLiterarias.Api.Controllers
         }
 
         /// <summary>
-        /// Obtém a lista de citações geradas.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("citacoes")]
-        public async Task<IActionResult> ListarCitacoes()
-        {
-            return Ok(new ListarCitacoesResponse());
-        }
-
-        /// <summary>
         /// Gera citacoes a partir de uma lista de autores.
         /// </summary>
         /// <param name="gerarCitacaoRequest">Lista de autores</param>
@@ -35,20 +25,31 @@ namespace Guide.ObrasLiterarias.Api.Controllers
         [Route("citacoes")]
         public async Task<IActionResult> GerarCitacaoAsync([FromBody] GerarCitacaoRequest gerarCitacaoRequest)
         {
-            var result = this._obraService.GerarCitacao(gerarCitacaoRequest.Autores);
-
-            var response = new GerarCitacaoResponse();
-
-            foreach (var item in result)
+            try
             {
-                response.Citacoes.Add(new Citacao
-                {
-                    Autor = item.Key,
-                    AutorCitacao = item.Value
-                });
-            }
+                var result = await this._obraService.GerarCitacaoAsync(gerarCitacaoRequest.NumeroAutores, gerarCitacaoRequest.Autores);
 
-            return Ok(response);
+                var response = new GerarCitacaoResponse();
+
+                foreach (var item in result)
+                {
+                    response.Citacoes.Add(new Citacao
+                    {
+                        Autor = item.Key,
+                        AutorCitacao = item.Value
+                    });
+                }
+
+                return Ok(response);
+            }
+            catch(ArgumentException ae)
+            {
+                return BadRequest(ae.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
