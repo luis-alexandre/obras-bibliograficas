@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using FluentMigrator.Runner;
 using Guide.ObrasLiterarias.Domain.Repository;
 using Guide.ObrasLiterarias.Domain.Services;
 using Guide.ObrasLiterarias.Infra.Infra.SqlLite;
