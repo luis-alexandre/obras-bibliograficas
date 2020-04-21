@@ -35,6 +35,13 @@ namespace Guide.ObrasLiterarias.Api
             services.AddSingleton<IObraService, ObraService>();
             services.AddSingleton<ICitacaoAutorRepository, CitacaoAutorRepository>();
 
+            services.AddCors(o => o.AddPolicy("EnableCORS", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1",
@@ -67,6 +74,7 @@ namespace Guide.ObrasLiterarias.Api
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseCors("EnableCORS");
             app.UseMvc();
 
             app.UseSwagger();

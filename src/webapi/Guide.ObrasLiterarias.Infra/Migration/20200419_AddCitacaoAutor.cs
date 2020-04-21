@@ -10,7 +10,7 @@ namespace Guide.ObrasLiterarias.Infra.Migration
         public override void Up()
         {
             Create.Table("CitacaoAutor")
-                .WithColumn("Id").AsString().PrimaryKey()
+                .WithColumn("Id").AsInt64()
                 .WithColumn("Autor").AsString()
                 .WithColumn("Citacao").AsString();
         }

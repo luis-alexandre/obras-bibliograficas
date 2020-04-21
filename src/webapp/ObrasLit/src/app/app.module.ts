@@ -1,0 +1,27 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'
+import { ReactiveFormsModule } from '@angular/forms'
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CitacaoCreateComponent } from './citacao-create/citacao-create.component';
+import { CitacaoCreateService } from './citacao-create.service';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    CitacaoCreateComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule
+  ],
+  providers: [
+    CitacaoCreateService
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

@@ -39,7 +39,7 @@ namespace Guide.ObrasLiterarias.Services
 
                 CitacaoAutor citacaoAutor = new CitacaoAutor
                 {
-                    Id = new Guid().ToString(),
+                    Id = DateTime.Now.Ticks.ToString(),
                     Autor = item,
                     Citacao = citacao
                 };
