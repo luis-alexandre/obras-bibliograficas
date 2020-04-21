@@ -26,6 +26,16 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5000"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "environmentVariables": {
+        "databaseFile": "databaseFile.db3",
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
+      "httpPort": 10000
     }
   }
 }
