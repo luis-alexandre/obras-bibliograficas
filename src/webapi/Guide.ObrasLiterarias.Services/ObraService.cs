@@ -32,11 +32,10 @@ namespace Guide.ObrasLiterarias.Services
             {
                 throw new ArgumentException("Número de autores não corresponde com a quantidade informada.");
             }
-                        
+
             foreach (var item in autores)
             {
                 var citacao = ObterCitacao(item);
-                result.Add(item, citacao);
 
                 CitacaoAutor citacaoAutor = new CitacaoAutor
                 {
@@ -46,6 +45,11 @@ namespace Guide.ObrasLiterarias.Services
                 };
 
                 await this._citacaoAutorRepository.InserirAsync(citacaoAutor);
+
+                if (!result.ContainsKey(item))
+                {
+                    result.Add(item, citacao);
+                }
             }
 
             return result;

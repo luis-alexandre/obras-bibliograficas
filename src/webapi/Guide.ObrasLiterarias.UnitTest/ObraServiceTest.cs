@@ -2,6 +2,7 @@ using Guide.ObrasLiterarias.Domain.Entities;
 using Guide.ObrasLiterarias.Domain.Repository;
 using Guide.ObrasLiterarias.Services;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
@@ -76,6 +77,15 @@ namespace Guide.ObrasLiterarias.UnitTest
             });
 
             Assert.Equal(citacao[SOBRENOME_COM_SILABA_EXEMPLO], SOBRENOME_COM_SILABA_RESULTADO);
+        }
+
+        [Fact]
+        public async Task NumeroAutores_DiferenteQtdAutoresInformados_RetornaException()
+        {
+            Assert.ThrowsAsync<ArgumentException>(() => this._obraService.GerarCitacaoAsync(2, new List<string>
+            {
+                SOBRENOME_COM_SILABA_EXEMPLO
+            }));
         }
 
     }
