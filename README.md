@@ -1,29 +1,37 @@
 # Obras Bibliográficas
 
-(LEIA ATÉ O FINAL)
+## Requisitos
 
-Quando se lista o nome de autores de livros, artigos e outras publicações é comum que se apresente o nome do autor ou dos autores da seguinte forma: sobrenome do autor em letras maiúsculas, seguido de uma vírgula e da primeira parte do nome apenas com as iniciais maiúsculas.
+* .NET Core 2.2
+* .Node JS v10 ou superior
+* Angular 9
+* Docker Tools (para execução de containers)
 
-Por exemplo:
-* SILVA, Joao
-* COELHO, Paulo
-* ARAUJO, Celso de
+## Estrutura da solução
 
-Seu desafio é fazer um programa que leia um número inteiro correspondendo ao número de nomes que será fornecido, e, a seguir, leia estes nomes (que podem estar em qualquer tipo de letra) e imprima a versão formatada no estilo exemplificado acima.
+A solução está dividida em dois projetos: Web API (backend) e Web App (Frontend).
+Para a projeto de Web API foi construído utilizando .NET Core 2.2 e o DDD (Domain Drive Design).
 
-As seguintes regras devem ser seguidas nesta formatação:
-* o sobrenome será igual a última parte do nome e deve ser apresentado em letras maiúsculas;
-* se houver apenas uma parte no nome, ela deve ser apresentada em letras maiúsculas (sem vírgula): se a entrada for “ Guimaraes” , a saída deve ser “ GUIMARAES”;
-* se a última parte do nome for igual a "FILHO", "FILHA", "NETO", "NETA", "SOBRINHO", "SOBRINHA" ou "JUNIOR" e houver duas ou mais partes antes, a penúltima parte fará parte do sobrenome. Assim: se a entrada for "Joao Silva Neto", a saída deve ser "SILVA NETO, Joao" ; se a entrada for "Joao Neto" , a saída deve ser "NETO, Joao";
-* as partes do nome que não fazem parte do sobrenome devem ser impressas com a inicial maiúscula e com as demais letras minúsculas;
-* "da", "de", "do", "das", "dos" não fazem parte do sobrenome e não iniciam por letra maiúscula.
+O Projeto está dividido da seguinte forma:
 
-## Testes por tecnologia
-* [.NET](https://github.com/guideti/obras-bibliograficas/blob/master/TESTE_DOTNET.md)
-* [Ruby](https://github.com/guideti/obras-bibliograficas/blob/master/TESTE_RUBY.md)
-* [Angular](https://github.com/guideti/obras-bibliograficas/blob/master/TESTE_ANGULAR.md)
+* Guide.ObrasLiterarias.Api: responsável por expor as operações da api.
+* Guide.ObrasLiterarias.Domain: contém todos as interfaces e entidades utilizado pelos demais projetos da solução.
+* Guide.ObrasLiterarias.Infra: acesso ao banco de dados. Foi utilizado SQLite e Dapper para simular as transações com o banco de dados.
+* Guide.ObrasLiterarias.Services: contém as regras de negócios especificadas no teste.
+* Guide.ObrasLiterarias.UnitTest: teste unitário para as projetos da solução. Nesse projeto foram construídos os testes unitários focados na regra de negócio.
 
-## Procedimento para entrega
-Realize um fork deste repositório, desenvolva sua solução e encaminhe o seu repositório com o seu código. Arquivos compactados não serão aceitos.
+Para o projeto de Web App foi utilizado Angular 9. Os componentes e serviços foram criados com o nome "citacao-create".
 
-Altere o arquivo README para descrever quais componentes foram utilizados e como sua aplicação deverá ser executada.
+Todos os itens do projeto Web App estão localizados dentro da pasta "/src/webapp/ObrasLit/src/app/".
+
+## Como executar a aplicação
+
+Para iniciar as aplicações execute o arquivo deploy.bat dentro da pasta "src/".
+
+Esse arquivo contém as instruções necessárias para realizar o build e construção de imagens Docker para cada projeto.
+
+Após as imagens construídas com sucesso, um arquivo docker-compose é inicializado e consequentemente os containers de cada imagem são criados.
+
+Para acessar cada projeto utilize o caminho abaixo após o docker compose file for inicializado:
+* Web App: http://localhost:4200
+* Web Api: http://localhost:5000/swagger/
