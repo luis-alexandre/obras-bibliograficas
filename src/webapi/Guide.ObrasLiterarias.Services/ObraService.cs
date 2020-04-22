@@ -3,6 +3,7 @@ using Guide.ObrasLiterarias.Domain.Repository;
 using Guide.ObrasLiterarias.Domain.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,13 +26,13 @@ namespace Guide.ObrasLiterarias.Services
 
         public async Task<Dictionary<string, string>> GerarCitacaoAsync(int numeroAutores, List<string> autores)
         {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
             if (numeroAutores != autores.Count)
             {
                 throw new ArgumentException("Número de autores não corresponde com a quantidade informada.");
             }
-
-            Dictionary<string, string> result = new Dictionary<string, string>();
-
+                        
             foreach (var item in autores)
             {
                 var citacao = ObterCitacao(item);
