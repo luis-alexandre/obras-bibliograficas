@@ -10,8 +10,9 @@
 ## Estrutura da solução
 
 A solução está dividida em dois projetos: Web API (backend) e Web App (Frontend).
-Para a projeto de Web API foi construído utilizando .NET Core 2.2 e o DDD (Domain Drive Design).
 
+### Web API
+Para a projeto de Web API foi construído utilizando .NET Core 2.2 e o DDD (Domain Drive Design).
 O Projeto está dividido da seguinte forma:
 
 * Guide.ObrasLiterarias.Api: responsável por expor as operações da api.
@@ -20,8 +21,8 @@ O Projeto está dividido da seguinte forma:
 * Guide.ObrasLiterarias.Services: contém as regras de negócios especificadas no teste.
 * Guide.ObrasLiterarias.UnitTest: teste unitário para as projetos da solução. Nesse projeto foram construídos os testes unitários focados na regra de negócio.
 
+### Web App
 Para o projeto de Web App foi utilizado Angular 9. Os componentes e serviços foram criados com o nome "citacao-create".
-
 Todos os itens do projeto Web App estão localizados dentro da pasta "/src/webapp/ObrasLit/src/app/".
 
 ## Como executar a aplicação
