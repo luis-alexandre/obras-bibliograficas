@@ -1,0 +1,63 @@
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@master
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Create ACR
+      id: create-acr
+      run: |
+        az acr create -n aksregistrydemo -g aksregistrydemob288-rg --location "East US 2" --sku Basic --admin-enabled
+        echo "::set-output name=acr_username::`az acr credential show -n aksregistrydemo --query username | xargs`"
+        echo "::set-output name=acr_password::`az acr credential show -n aksregistrydemo --query passwords[0].value | xargs`"
+        echo "::add-mask::`az acr credential show -n aksregistrydemo --query passwords[0].value | xargs`"
+
+    - uses: azure/docker-login@v1
+      with:
+        login-server: aksregistrydemo.azurecr.io
+        username: ${{ steps.create-acr.outputs.acr_username }}
+        password: ${{ steps.create-acr.outputs.acr_password }}
+
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/src/webapi/Guide.ObrasLiterarias.Api" -f  "src/webapi/Guide.ObrasLiterarias.Api/Dockerfile" -t aksregistrydemo.azurecr.io/akssecdemo:${{ github.sha }}
+        docker push aksregistrydemo.azurecr.io/akssecdemo:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      id: login
+      with:
+         kubeconfig: ${{ secrets.aks_akssecdemo_kubeConfig }}
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep akssecdemo021a | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace akssecdemo021a`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: akssecdemo021a
+        container-registry-url: aksregistrydemo.azurecr.io
+        container-registry-username: ${{ steps.create-acr.outputs.acr_username }}
+        container-registry-password: ${{ steps.create-acr.outputs.acr_password }}
+        secret-name: akssecdemodockerauth
+       
+    - uses: azure/k8s-deploy@v1
+      with:
+        namespace: akssecdemo021a
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          aksregistrydemo.azurecr.io/akssecdemo:${{ github.sha }}
+        imagepullsecrets: |
+          akssecdemodockerauth
