@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: "akssecdemo-b1dd"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: "akssecdemo-b1dd"
+    spec:
+      containers:
+        - name: "akssecdemo-b1dd"
+          image: "aksregistrydemo.azurecr.io/akssecdemo"
+          ports:
+          - containerPort: 80
